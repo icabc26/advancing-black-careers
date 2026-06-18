@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+/* ===================================================================
+   Design tokens — Advancing Black Careers (dark & luxe, black + gold)
+   Encoded from design_handoff_abc_website/README.md
+=================================================================== */
+@theme {
+  /* Surfaces */
+  --color-base: #0a0908; /* page background (near-black) */
+  --color-panel: #0c0a08; /* cards / raised panels */
+  --color-panel-2: #100d0a; /* alternating sections */
+  --color-deep: #070605; /* footer */
+  --color-glow: #14110d; /* photo placeholder base */
+
+  /* Gold ramp */
+  --color-gold: #c9a24b; /* primary buttons, logo ring, active underline */
+  --color-gold-light: #e6c878; /* links, accents, stat numbers */
+  --color-gold-pale: #f0e2bf; /* "ABC" wordmark */
+  --color-mono-label: #8a6d2f; /* uppercase mono eyebrows */
+
+  /* Text */
+  --color-cream: #f3eee2; /* primary text on dark */
+  --color-muted: #bdb5a7; /* body copy */
+  --color-dim: #9a948a; /* captions / metadata */
+  --color-faint: #6b6459; /* placeholders / footer fine print */
+
+  /* Lines */
+  --color-hairline: rgba(201, 162, 75, 0.16);
+  --color-card: rgba(201, 162, 75, 0.2);
+
+  /* Fonts (wired via next/font in layout.tsx) */
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-body: var(--font-hanken), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+/* ------------------------------------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-base);
+    color: var(--color-cream);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: rgba(201, 162, 75, 0.3);
+    color: #fff;
+  }
+}
+
+/* Reusable utility: gold-glow "photo" / avatar placeholder fill */
+@utility glow-fill {
+  background:
+    radial-gradient(120% 120% at 60% 20%, rgba(201, 162, 75, 0.16), rgba(10, 9, 8, 0) 60%),
+    var(--color-glow);
+}
+
+/* Scroll-reveal (driven by components/Reveal.tsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .globe-spin {
+    animation: none !important;
+  }
+}
+
+@keyframes globe-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.globe-spin {
+  animation: globe-spin 90s linear infinite;
+}
