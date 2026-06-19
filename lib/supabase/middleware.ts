@@ -30,7 +30,17 @@ export async function updateSession(request: NextRequest) {
   // IMPORTANT: getClaims()/getUser() must be called to refresh the token.
   const {
     data: { user },
+    error,
   } = await supabase.auth.getUser();
+
+  // A stale/invalid session (e.g. the user was deleted, or keys changed) leaves
+  // a dead refresh token in the browser. Drop the auth cookies so it self-heals
+  // instead of erroring on every request.
+  if (error && (error.code === "refresh_token_not_found" || error.status === 400)) {
+    for (const cookie of request.cookies.getAll()) {
+      if (cookie.name.startsWith("sb-")) supabaseResponse.cookies.delete(cookie.name);
+    }
+  }
 
   // Protect the member area: bounce unauthenticated users to /login.
   const isProtected = request.nextUrl.pathname.startsWith("/tracker");

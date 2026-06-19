@@ -6,8 +6,8 @@ TypeScript + Tailwind CSS v4**. Dark-and-gold editorial design.
 Public pages: **Landing (`/`)**, **Events (`/events`)**, **Sponsors (`/sponsors`)**,
 **Committee (`/committee`)**. The member area — **Login (`/login`)** and the **Internship Tracker
 (`/tracker`)** — is powered by [Supabase](https://supabase.com) (Postgres + Auth + Row-Level
-Security). Sign-in is a passwordless **magic link** restricted to a committee-managed **member
-allowlist**.
+Security). Sign-in is **Imperial email + password**, restricted to a committee-managed **member
+allowlist** (only emails on the list can create an account).
 
 ## Run locally
 
@@ -49,13 +49,13 @@ One-time setup to enable login + the internship tracker.
 4. **Turn on the allowlist hook.** Dashboard → **Authentication → Hooks → Before User Created** →
    choose **Postgres**, schema `public`, function `before_user_created_allowlist`. This blocks
    anyone not on the member list from creating an account.
-5. **Add member emails.** Dashboard → **Table Editor → `allowed_members`** → add each member's
+5. **Turn off email confirmation.** Dashboard → **Authentication → Sign In / Providers → Email** →
+   disable **Confirm email**. Members are gated by the allowlist hook, so they can sign up with a
+   password and use the tracker immediately without waiting on a confirmation email.
+6. **Add member emails.** Dashboard → **Table Editor → `allowed_members`** → add each member's
    Imperial email (set `role` to `committee`/`admin` for organisers). Only these emails can sign in.
-6. **Seed live opportunities.** Add rows to the **`opportunities`** table — they appear at the top of
+7. **Seed live opportunities.** Add rows to the **`opportunities`** table — they appear at the top of
    the tracker for all members.
-7. **(Recommended) Custom email.** Supabase's built-in magic-link email has a low hourly rate limit.
-   Before a full rollout, set up custom SMTP (e.g. [Resend](https://resend.com)) under
-   **Authentication → Emails**.
 
 > Managing the allowlist and opportunities is done in the Supabase dashboard for now; a built-in
 > committee admin UI is future work.
