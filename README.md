@@ -4,8 +4,10 @@ Marketing website for the ABC student society. Built with **Next.js (App Router)
 TypeScript + Tailwind CSS v4**. Dark-and-gold editorial design.
 
 Public pages: **Landing (`/`)**, **Events (`/events`)**, **Sponsors (`/sponsors`)**,
-**Committee (`/committee`)**, and a coming-soon **Login (`/login`)**. The member portal and
-internship tracker are intentionally not built yet.
+**Committee (`/committee`)**. The member area — **Login (`/login`)** and the **Internship Tracker
+(`/tracker`)** — is powered by [Supabase](https://supabase.com) (Postgres + Auth + Row-Level
+Security). Sign-in is a passwordless **magic link** restricted to a committee-managed **member
+allowlist**.
 
 ## Run locally
 
@@ -14,6 +16,9 @@ npm install      # first time only
 npm run dev      # http://localhost:3000
 npm run build    # production build
 ```
+
+The marketing pages work without any setup. The login + tracker need Supabase configured — see
+**[Member area setup](#member-area-setup-supabase)** below.
 
 ## Editing content — everything you'll change lives in `/data`
 
@@ -28,12 +33,43 @@ Drop image files in `/public` (e.g. `public/events/launch.jpg`, `public/committe
 the matching `photo: "/events/launch.jpg"` field in the data file. Until then, tasteful gold-glow
 placeholders show.
 
+## Member area setup (Supabase)
+
+One-time setup to enable login + the internship tracker.
+
+1. **Create a project** at [supabase.com](https://supabase.com) (free tier is plenty for ≤150
+   members).
+2. **Add env vars.** Copy `.env.local.example` to `.env.local` and fill in the values from your
+   Supabase project (**Settings → API**): `NEXT_PUBLIC_SUPABASE_URL`,
+   `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, and `NEXT_PUBLIC_SITE_URL`
+   (`http://localhost:3000` locally; your real domain in production).
+3. **Run the migrations.** In the Supabase dashboard **SQL Editor**, run, in order:
+   `supabase/migrations/0001_init.sql` then `supabase/migrations/0002_allowlist_hook.sql`. Optionally
+   run `supabase/seed.sql` for example data.
+4. **Turn on the allowlist hook.** Dashboard → **Authentication → Hooks → Before User Created** →
+   choose **Postgres**, schema `public`, function `before_user_created_allowlist`. This blocks
+   anyone not on the member list from creating an account.
+5. **Add member emails.** Dashboard → **Table Editor → `allowed_members`** → add each member's
+   Imperial email (set `role` to `committee`/`admin` for organisers). Only these emails can sign in.
+6. **Seed live opportunities.** Add rows to the **`opportunities`** table — they appear at the top of
+   the tracker for all members.
+7. **(Recommended) Custom email.** Supabase's built-in magic-link email has a low hourly rate limit.
+   Before a full rollout, set up custom SMTP (e.g. [Resend](https://resend.com)) under
+   **Authentication → Emails**.
+
+> Managing the allowlist and opportunities is done in the Supabase dashboard for now; a built-in
+> committee admin UI is future work.
+
 ## Deploy to Vercel
 
 1. Push this repo to GitHub.
 2. On [vercel.com](https://vercel.com), **New Project → Import** the repo. Framework auto-detects as
-   Next.js; no settings needed. Deploy.
-3. Add a custom domain later under the project's **Domains** tab.
+   Next.js.
+3. Under **Settings → Environment Variables**, add the same four variables from `.env.local`
+   (set `NEXT_PUBLIC_SITE_URL` to your production URL). Redeploy.
+4. In Supabase, add your production URL to **Authentication → URL Configuration → Redirect URLs**
+   (e.g. `https://your-domain/auth/callback`).
+5. Add a custom domain later under the project's **Domains** tab.
 
 ## Design reference
 

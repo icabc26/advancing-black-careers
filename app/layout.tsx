@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Hanken_Grotesk, JetBrains_Mono } from "next/font/go
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { createClient } from "@/lib/supabase/server";
 
 const cormorant = Cormorant_Garamond({
   weight: ["400", "500", "600", "700"],
@@ -32,18 +33,23 @@ export const metadata: Metadata = {
     "Advancing Black Careers (ABC) connects Black students at Imperial College London with the mentors, employers and community that turn ambition into offers.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <html
       lang="en"
       className={`${cormorant.variable} ${hanken.variable} ${jetbrains.variable} h-full`}
     >
       <body className="bg-base text-cream min-h-full flex flex-col">
-        <Nav />
+        <Nav userEmail={user?.email ?? null} />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>

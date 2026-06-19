@@ -5,8 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { site } from "@/data/site";
+import { signOut } from "@/app/auth/actions";
 
-const links = [
+const baseLinks = [
   { href: "/", label: "Home" },
   { href: "/events", label: "Events" },
   { href: "/sponsors", label: "Sponsors" },
@@ -29,10 +30,15 @@ function Logo() {
   );
 }
 
-export default function Nav() {
+export default function Nav({ userEmail }: { userEmail: string | null }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const signedIn = Boolean(userEmail);
+  const links = signedIn
+    ? [...baseLinks, { href: "/tracker", label: "Tracker" }]
+    : baseLinks;
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -69,12 +75,23 @@ export default function Nav() {
               {l.label}
             </Link>
           ))}
-          <Link
-            href="/login"
-            className="rounded-[2px] border border-gold px-5 py-2 text-gold-light transition-colors hover:bg-gold/10"
-          >
-            Log in
-          </Link>
+          {signedIn ? (
+            <form action={signOut}>
+              <button
+                type="submit"
+                className="rounded-[2px] border border-gold px-5 py-2 text-gold-light transition-colors hover:bg-gold/10"
+              >
+                Sign out
+              </button>
+            </form>
+          ) : (
+            <Link
+              href="/login"
+              className="rounded-[2px] border border-gold px-5 py-2 text-gold-light transition-colors hover:bg-gold/10"
+            >
+              Log in
+            </Link>
+          )}
         </div>
 
         {/* Mobile toggle */}
@@ -120,12 +137,23 @@ export default function Nav() {
                 {l.label}
               </Link>
             ))}
-            <Link
-              href="/login"
-              className="mt-2 rounded-[2px] border border-gold px-4 py-3 text-center text-gold-light"
-            >
-              Log in
-            </Link>
+            {signedIn ? (
+              <form action={signOut} className="mt-2">
+                <button
+                  type="submit"
+                  className="w-full rounded-[2px] border border-gold px-4 py-3 text-center text-gold-light"
+                >
+                  Sign out
+                </button>
+              </form>
+            ) : (
+              <Link
+                href="/login"
+                className="mt-2 rounded-[2px] border border-gold px-4 py-3 text-center text-gold-light"
+              >
+                Log in
+              </Link>
+            )}
           </div>
         </div>
       )}

@@ -1,14 +1,28 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ButtonLink } from "@/components/Button";
-import { site } from "@/data/site";
+import { redirect } from "next/navigation";
+import LoginForm from "@/components/LoginForm";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Member login · Imperial ABC",
-  description: "Member login for Advancing Black Careers — coming soon.",
+  description: "Sign in to the Advancing Black Careers member area and internship tracker.",
 };
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ redirect?: string; error?: string }>;
+}) {
+  const { redirect: redirectTo } = await searchParams;
+
+  // Already signed in? Skip straight to the member area.
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) redirect(redirectTo || "/tracker");
+
   return (
     <section className="mx-auto max-w-[1000px] px-5 py-12 sm:px-8 md:px-14 md:py-16">
       <div className="flex min-h-[560px] flex-col overflow-hidden rounded-[3px] border border-hairline md:flex-row">
@@ -26,35 +40,20 @@ export default function LoginPage() {
           </div>
           <div>
             <p className="font-serif text-[28px] leading-[1.18] sm:text-[30px]">
-              Welcome to
+              Welcome back to
               <br />
               the community.
             </p>
             <p className="mt-3 text-[13px] leading-[1.6] text-dim">
-              Members &amp; committee will sign in here to access the internship tracker, RSVP to
-              events and more.
+              Members &amp; committee sign in here to access the internship tracker, RSVP to events
+              and more.
             </p>
           </div>
         </div>
 
-        {/* Coming soon */}
+        {/* Form */}
         <div className="flex flex-1 flex-col justify-center p-10 md:p-12">
-          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-gold-light">
-            Coming soon
-          </p>
-          <h1 className="mb-3 font-serif text-[34px] font-semibold sm:text-[40px]">
-            Member login is on the way
-          </h1>
-          <p className="mb-9 max-w-[420px] text-[14px] leading-[1.65] text-muted">
-            We&apos;re building the member area — including the internship tracker — right now. In the
-            meantime, join the society and we&apos;ll get you set up the moment it&apos;s live.
-          </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href={site.membershipUrl}>Become a member</ButtonLink>
-            <ButtonLink href="/" variant="secondary">
-              Back to home
-            </ButtonLink>
-          </div>
+          <LoginForm redirect={redirectTo || "/tracker"} />
         </div>
       </div>
     </section>
