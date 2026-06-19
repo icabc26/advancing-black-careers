@@ -12,10 +12,13 @@ export type CommitteeMember = {
 };
 
 export const committee: CommitteeMember[] = [
-  { name: "Your Name", role: "President", course: "Course, Year" },
-  { name: "Your Name", role: "Vice-President", course: "Course, Year" },
-  { name: "Your Name", role: "Treasurer", course: "Course, Year" },
-  { name: "Your Name", role: "Events Lead", course: "Course, Year" },
-  { name: "Your Name", role: "Sponsorship Lead", course: "Course, Year" },
-  { name: "Your Name", role: "Marketing Lead", course: "Course, Year" },
+  { name: "Rola Makoyawo", role: "Chair", course: "Material Science and Engineering, 2nd Year" },
+  { name: "Tomi Fabamigbe", role: "Vice-Chair", course: "Chemical Engineering, 2nd Year" },
+  { name: "Dami Omorodion-Banjo", role: "Treasurer", course: "Electrical & Electronic Engineering, 2nd Year" },
+  { name: "Elijah Thomas-Williams", role: "Finance Lead", course: "Material Science and Engineering, 2nd Year" },
+  { name: "Fola Otulana", role: "Finance Lead", course: "Maths, 2nd Year" },
+  { name: "Ikaheng Pagiwa", role: "Finance Lead", course: "Chemistry, 2nd Year" },
+  { name: "Chude Ndozi", role: "Tech Lead", course: "Computing, 2nd Year" },
+  { name: "Collins Olafusi", role: "Tech Lead", course: "Computing, 1st Year" },
+  { name: "Shayne Chibundu", role: "Consulting Lead", course: "Aerospace Engineering, 2nd Year" },
 ];
