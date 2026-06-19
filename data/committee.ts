@@ -19,6 +19,6 @@ export const committee: CommitteeMember[] = [
   { name: "Fola Otulana", role: "Finance Lead", course: "Maths, 2nd Year" },
   { name: "Ikaheng Pagiwa", role: "Finance Lead", course: "Chemistry, 2nd Year" },
   { name: "Chude Ndozi", role: "Tech Lead", course: "Computing, 2nd Year" },
-  { name: "Collins Olafusi", role: "Tech Lead", course: "COmputing, 1st Year" },
+  { name: "Collins Olafusi", role: "Tech Lead", course: "Computing, 1st Year" },
   { name: "Shayne Chibundu", role: "Consulting Lead", course: "Aerospace Engineering, 2nd Year" },
 ];
