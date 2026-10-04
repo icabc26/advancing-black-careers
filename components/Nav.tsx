@@ -50,8 +50,13 @@ export default function Nav({ userEmail }: { userEmail: string | null }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close the mobile menu on route change.
-  useEffect(() => setOpen(false), [pathname]);
+  // Close the mobile menu on route change (adjust state during render rather
+  // than in an effect — https://react.dev/learn/you-might-not-need-an-effect).
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setOpen(false);
+  }
 
   return (
     <header

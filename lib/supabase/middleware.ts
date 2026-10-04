@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 /**
  * Refreshes the Supabase session on every request and guards member-only routes.
- * Called from the root `middleware.ts`.
+ * Called from the root `proxy.ts` (Next 16's name for middleware).
  */
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
@@ -36,9 +36,19 @@ export async function updateSession(request: NextRequest) {
   // A stale/invalid session (e.g. the user was deleted, or keys changed) leaves
   // a dead refresh token in the browser. Drop the auth cookies so it self-heals
   // instead of erroring on every request.
-  if (error && (error.code === "refresh_token_not_found" || error.status === 400)) {
+  // - Skip "no session at all" (AuthSessionMissingError is also a 400): that's
+  //   just a logged-out visitor.
+  // - Keep the PKCE `-code-verifier` cookie: email links (confirm / reset)
+  //   need it to finish signing in.
+  const isStaleSession =
+    error &&
+    error.name !== "AuthSessionMissingError" &&
+    (error.code === "refresh_token_not_found" || error.status === 400);
+  if (isStaleSession) {
     for (const cookie of request.cookies.getAll()) {
-      if (cookie.name.startsWith("sb-")) supabaseResponse.cookies.delete(cookie.name);
+      if (cookie.name.startsWith("sb-") && !cookie.name.endsWith("-code-verifier")) {
+        supabaseResponse.cookies.delete(cookie.name);
+      }
     }
   }
 
