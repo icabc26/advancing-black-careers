@@ -3,6 +3,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import LoginForm from "@/components/LoginForm";
 import { createClient } from "@/lib/supabase/server";
+import { safeRedirect } from "@/lib/urls";
 
 export const metadata: Metadata = {
   title: "Member login · Imperial ABC",
@@ -14,14 +15,16 @@ export default async function LoginPage({
 }: {
   searchParams: Promise<{ redirect?: string; error?: string }>;
 }) {
-  const { redirect: redirectTo } = await searchParams;
+  const params = await searchParams;
+  const redirectTo = safeRedirect(params.redirect);
+  const linkFailed = params.error === "link" || params.error === "auth";
 
   // Already signed in? Skip straight to the member area.
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (user) redirect(redirectTo || "/tracker");
+  if (user) redirect(redirectTo);
 
   return (
     <section className="mx-auto max-w-[1000px] px-5 py-12 sm:px-8 md:px-14 md:py-16">
@@ -53,7 +56,16 @@ export default async function LoginPage({
 
         {/* Form */}
         <div className="flex flex-1 flex-col justify-center p-10 md:p-12">
-          <LoginForm redirect={redirectTo || "/tracker"} />
+          {linkFailed && (
+            <p
+              role="alert"
+              className="mb-6 max-w-[420px] rounded-[2px] border border-[#e0a0a0]/30 px-4 py-3 text-[13px] leading-[1.55] text-[#e0a0a0]"
+            >
+              That email link has expired or was already used. If you were confirming your account,
+              try signing in. For a password reset, request a new link.
+            </p>
+          )}
+          <LoginForm redirect={redirectTo} />
         </div>
       </div>
     </section>

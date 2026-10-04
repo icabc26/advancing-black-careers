@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { authenticate, type AuthResult } from "@/app/login/actions";
@@ -98,8 +99,16 @@ export default function LoginForm({ redirect }: { redirect: string }) {
           <p className="mb-4 text-[13px] leading-[1.55] text-gold-light">{state.notice}</p>
         )}
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
           <SubmitButton mode={mode} />
+          {mode === "signin" && (
+            <Link
+              href="/forgot-password"
+              className="text-[13px] text-gold-light underline-offset-2 hover:underline"
+            >
+              Forgot password?
+            </Link>
+          )}
         </div>
       </form>
 
