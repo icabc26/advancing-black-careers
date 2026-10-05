@@ -34,7 +34,12 @@ export default function CommitteePage() {
           {committee.map((m, i) => (
             <Reveal key={`${m.name}-${m.role}`} delay={(i % 4) * 80}>
               <div>
-                <PhotoPlaceholder src={m.photo} className="mb-3.5 aspect-square w-full" />
+                <PhotoPlaceholder
+                  src={m.photo}
+                  alt={m.photo ? m.name : ""}
+                  sizes="(min-width: 768px) 25vw, 50vw"
+                  className="mb-3.5 aspect-square w-full"
+                />
                 <div className="font-serif text-xl sm:text-[21px]">{m.name}</div>
                 <div className="mt-0.5 text-[12.5px] text-gold-light">{m.role}</div>
                 {m.course && <div className="mt-1 text-[12px] text-dim">{m.course}</div>}
@@ -53,10 +58,16 @@ export default function CommitteePage() {
             </p>
             <div className="flex flex-col items-start gap-10 md:flex-row md:items-center md:gap-12">
               <PhotoPlaceholder
-                label="photo — founders"
-                className="h-[320px] w-full flex-none md:h-[360px] md:w-[300px]"
+                src="/committee/committee.jpg"
+                alt="The ABC founding committee"
+                width={2400}
+                height={1601}
+                sizes="(min-width: 768px) 560px, 100vw"
+                className="w-full flex-none md:w-[calc(50%-12px)]"
+                // Hard cap (about two committee photos wide) so the quote always keeps room.
+                style={{ maxWidth: 560 }}
               />
-              <div className="flex-1">
+              <div className="min-w-[260px] flex-1">
                 <p className="mb-7 font-serif text-[24px] italic leading-[1.34] text-[#e9e2d3] sm:text-[32px]">
                   “We started ABC because talent is everywhere, but access isn&apos;t. We&apos;re
                   building the network, the mentorship and the community we wish we&apos;d had — and
