@@ -113,8 +113,12 @@ export default function Home() {
         </Reveal>
         <Reveal className="w-full flex-1" delay={120}>
           <PhotoPlaceholder
-            label="photo — committee / members, candid"
-            className="h-[280px] w-full sm:h-[360px] md:h-[380px]"
+            src="/committee/committee2.jpg"
+            alt="Members of the ABC committee together"
+            width={2400}
+            height={1601}
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="w-full"
           />
         </Reveal>
       </section>
