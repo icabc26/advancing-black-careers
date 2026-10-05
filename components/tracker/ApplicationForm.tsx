@@ -1,13 +1,11 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createApplication, updateApplication } from "@/app/tracker/actions";
 import { STATUSES, type Application } from "@/data/tracker";
-
-const fieldClass =
-  "h-11 w-full rounded-[2px] border border-gold/30 bg-transparent px-3 text-[14px] text-cream placeholder:text-faint focus:border-gold focus:outline-none";
-const labelClass = "mb-1.5 block font-mono text-[11px] uppercase tracking-[0.1em] text-dim";
+import DateField from "@/components/tracker/DateField";
+import { fieldClass, labelClass } from "@/components/tracker/formStyles";
 
 export default function ApplicationForm({
   application,
@@ -21,6 +19,9 @@ export default function ApplicationForm({
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const editing = Boolean(application);
+  // Single-open invariant: opening one date field closes the other (Req 1.3).
+  const [openField, setOpenField] = useState<"date_applied" | "deadline" | null>(null);
+  const popupOpenAtPress = useRef(false);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -42,7 +43,13 @@ export default function ApplicationForm({
   return (
     <div
       className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-4"
-      onClick={onClose}
+      // The document pointerdown listener in CalendarPopup closes the popup
+      // before click fires, so record whether one was open at press time.
+      // React onPointerDown runs before that native document listener (Req 7.2).
+      onPointerDown={() => {
+        popupOpenAtPress.current = openField !== null;
+      }}
+      onClick={() => (popupOpenAtPress.current ? setOpenField(null) : onClose())}
       role="dialog"
       aria-modal="true"
     >
@@ -83,30 +90,22 @@ export default function ApplicationForm({
                 className={fieldClass}
               />
             </div>
-            <div>
-              <label className={labelClass} htmlFor="date_applied">
-                Date applied
-              </label>
-              <input
-                id="date_applied"
-                name="date_applied"
-                type="date"
-                defaultValue={application?.date_applied ?? ""}
-                className={fieldClass}
-              />
-            </div>
-            <div>
-              <label className={labelClass} htmlFor="deadline">
-                Deadline
-              </label>
-              <input
-                id="deadline"
-                name="deadline"
-                type="date"
-                defaultValue={application?.deadline ?? ""}
-                className={fieldClass}
-              />
-            </div>
+            <DateField
+              id="date_applied"
+              name="date_applied"
+              label="Date applied"
+              defaultValue={application?.date_applied ?? null}
+              open={openField === "date_applied"}
+              onOpenChange={(o) => setOpenField(o ? "date_applied" : null)}
+            />
+            <DateField
+              id="deadline"
+              name="deadline"
+              label="Deadline"
+              defaultValue={application?.deadline ?? null}
+              open={openField === "deadline"}
+              onOpenChange={(o) => setOpenField(o ? "deadline" : null)}
+            />
             <div className="sm:col-span-2">
               <label className={labelClass} htmlFor="status">
                 Status

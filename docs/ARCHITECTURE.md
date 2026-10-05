@@ -20,10 +20,13 @@ Known issues and planned fixes live in [`BACKLOG.md`](./BACKLOG.md).
 | Backend | Supabase via `@supabase/ssr` + `@supabase/supabase-js` |
 | Fonts | `next/font/google`: Cormorant Garamond (serif), Hanken Grotesk (body), JetBrains Mono (mono) |
 | Lint | ESLint 9 flat config (`eslint-config-next` core-web-vitals + typescript) |
-| Tests / CI | None |
+| Tests | Vitest **5.0.3** + fast-check **4.10.2** (exact-pinned devDependencies), unit and property tests for `lib/dates.ts` only. `@types/node` is `^22` to meet Vitest's peer requirement |
+| CI | None |
 | Hosting | Vercel (documented in the README; no `vercel.json`) |
 
-Scripts: `npm run dev`, `npm run build`, `npm run start`, `npm run lint`.
+Scripts: `npm run dev`, `npm run build`, `npm run start`, `npm run lint`, `npm test` (`vitest run`, one pass, no watch). Verify changes with `npm test`, `npm run lint` and `npm run build`.
+
+`vitest.config.mts` runs tests in the `node` environment and mirrors the `@/` alias. It's `.mts` rather than `.ts` so Vite loads it as ESM and doesn't print its CJS deprecation warning.
 
 Path alias: `@/*` maps to the repo root, e.g. `@/lib/supabase/server`.
 
@@ -69,6 +72,9 @@ lib/supabase/
   middleware.ts         updateSession(): token refresh, stale-cookie cleanup, /tracker guard
   client.ts             Browser client (currently unused)
 lib/urls.ts             safeRedirect() (same-origin path only) + getRequestOrigin() for email links
+lib/dates.ts            Pure, time-zone-safe {y, m, d} calendar helpers for the tracker date picker
+lib/dates.test.ts       Vitest unit + fast-check property tests for lib/dates.ts
+vitest.config.mts       Vitest config (node env, @/ alias)
 proxy.ts                Next 16 "proxy" (formerly middleware.ts) → updateSession()
 supabase/
   migrations/0001_init.sql            Tables, enum, triggers, RLS
@@ -231,11 +237,30 @@ Enum `application_status`: `Submitted`, `OA completed`, `HV completed`, `Intervi
 | `Tracker` | `applications` | Tabs (`table` / `board` / `chart`, where chart is "Coming soon"), the "＋ New" button, and modal state |
 | `ApplicationsTable` | `applications, onEdit, onNew` | Clicking a row edits it. ✕ asks for confirmation, then calls `deleteApplication` and `router.refresh()` |
 | `StatusBoard` | `applications, onEdit` | Kanban built from `BOARD_COLUMNS` (5 columns; HV + Interview share one) |
-| `ApplicationForm` | `application?, onClose` | Modal for create/edit using `useTransition`, then `router.refresh()` |
+| `ApplicationForm` | `application?, onClose` | Modal for create/edit using `useTransition`, then `router.refresh()`. Owns `openField` for the two date fields |
+| `DateField` | `id, name, label, defaultValue, open, onOpenChange` | Date applied / Deadline: button trigger, Clear button, hidden input, and the popup when open |
+| `CalendarPopup` | `id, label, selected, triggerRef, onSelect, onClose` | Month-grid calendar dialog rendered in a portal |
 | `OpportunityCard` | `opportunity` | Card plus a Save button (`saveOpportunity`) |
 | `StatusPill` | `status` | Coloured pill from `STATUS_PILL` |
 
+`formStyles.ts` exports the shared `fieldClass` and `labelClass` used by `ApplicationForm` and `DateField`. It's a separate module so `DateField` doesn't import `ApplicationForm` (which would be a cycle).
+
 After a mutation the client calls `router.refresh()`, and the server re-reads the data. There is no client-side store.
+
+### Date fields
+
+The two date inputs are a custom picker, not `<input type="date">`. **No date-picker package was added**: it's a small month grid, and building it keeps token-only styling and the exact ARIA wording.
+
+- **Form contract is unchanged.** Each `DateField` renders one `<input type="hidden" name="date_applied|deadline">` holding `YYYY-MM-DD` or `""`. That's the only named element, so the server actions, `data/tracker.ts` and the schema didn't change. The trigger, Clear and popup controls are all `type="button"` with no `name`.
+- **`DateField`.** The trigger is a `<button>` (so no on-screen keyboard on mobile) showing "2 Sep 2025" or "No date chosen", with `aria-haspopup="dialog"`, `aria-expanded` and `aria-controls`. Clear sits inside the field's right edge, after the trigger in tab order, and refocuses the trigger. `selected` only changes when a day is picked or Clear is pressed; month and year navigation never touch it. Initial state comes from `parseIso(application?.date_applied)`, and because `Tracker` mounts the form per open, state resets for free.
+- **Single-open.** `ApplicationForm` holds `openField: "date_applied" | "deadline" | null` and passes `open` / `onOpenChange` down, so opening one popup closes the other.
+- **`CalendarPopup`** is rendered with `createPortal(…, document.body)` and `position: fixed` (`z-[70]`, above the modal's `z-[60]`), so the modal panel never clips it. A layout effect places it under the trigger, flips it above when there's no room below, and clamps it inside the viewport (width `min(320, innerWidth − 16)`). It has a header (prev/next month, month heading, year `<select>` from `yearOptions`), a Monday-first `role="grid"` table with a roving tabindex, arrow-key navigation across month boundaries, and a polite live region that announces month changes.
+- **Closing.** Escape closes only the popup (`stopPropagation`) and refocuses the trigger. A document `pointerdown` outside the popup and trigger closes it, as does focus moving out (a `null` `relatedTarget` is ignored, for Safari). The popup root stops `click` propagation: React events from a portal bubble through the **React** tree, so without it a day click would reach the modal backdrop and close the form.
+- **Backdrop rule.** A backdrop click with a popup open closes only the popup; the next click closes the form. The document `pointerdown` listener has already closed the popup by the time `click` fires, so the backdrop's React `onPointerDown` (which runs first) records `popupOpenAtPress`, and `onClick` uses that.
+
+**`lib/dates.ts`** holds all the date logic, with no React. Dates are plain `CalDate = { y, m, d }` (1-based month) and `YearMonth = { y, m }`. Nothing passes a `YYYY-MM-DD` string to `new Date()` or reads local getters on a stored date. Day and weekday maths go through UTC (`setUTCFullYear` / `getUTC*`), so values never shift a day in negative-offset time zones. `todayLocal()` is the one deliberate local-time call. Month and weekday names are hard-coded en-GB arrays, not `Intl`. Exports: `parseIso`, `formatIso`, `formatDisplay`, `formatAccessibleName`, `formatMonthHeading`, `todayLocal`, `addDays`, `addMonths`, `sameDay`, `daysInMonth`, `weekdayMon0`, `monthGrid`, `yearOptions`. Its tests (`lib/dates.test.ts`) include property tests for the ISO round trip, time-zone independence (by switching `process.env.TZ`), grid completeness, and month/day navigation.
+
+`formatDate()` / `formatShortDate()` in `data/tracker.ts` (used to display stored dates and opportunity deadlines) don't use these helpers yet and still parse `YYYY-MM-DD` as UTC midnight, so they show the previous day in negative-offset zones. That's logged in [`BACKLOG.md`](./BACKLOG.md).
 
 ---
 

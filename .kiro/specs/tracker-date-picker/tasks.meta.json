@@ -1,0 +1,421 @@
+{
+  "pbtResults": {
+    "2.2 Write property test for ISO round trip": {
+      "status": "passed",
+      "lastRunTimestamp": 1791157829735
+    },
+    "2.3 Write property test for time-zone independence": {
+      "status": "passed",
+      "lastRunTimestamp": 1791158017388
+    },
+    "2.6 Write property test for month grid completeness": {
+      "status": "passed",
+      "lastRunTimestamp": 1791158100761
+    },
+    "2.7 Write property test for month navigation": {
+      "status": "passed",
+      "lastRunTimestamp": 1791158188448
+    },
+    "2.8 Write property test for day navigation": {
+      "status": "passed",
+      "lastRunTimestamp": 1791158270025
+    },
+    "2.9 Write property test for year options": {
+      "status": "passed",
+      "lastRunTimestamp": 1791158344259
+    }
+  },
+  "executionHistory": {
+    "1.1 Add Vitest and fast-check": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157373942
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157384764
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157619027
+      }
+    ],
+    "2.1 Add types, parsing and formatting helpers": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157374059
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157623550
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157688273
+      }
+    ],
+    "2.4 Add navigation and grid helpers": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157374293
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157691775
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157737410
+      }
+    ],
+    "2.5 Write example tests in `lib/dates.test.ts`": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157374581
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157843264
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157945731
+      }
+    ],
+    "3. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157374828
+      }
+    ],
+    "4.1 Render the popup, header and grid": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157375029
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157844065
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157945921
+      }
+    ],
+    "4.2 Add keyboard navigation and announcements": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157375259
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157955232
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158062753
+      }
+    ],
+    "4.3 Add close and propagation handling": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157375462
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158068660
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158137715
+      }
+    ],
+    "5.1 Implement the field and wire in `CalendarPopup`": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157375705
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158145339
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158225562
+      }
+    ],
+    "6.1 Replace the native date inputs with `DateField`": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157375922
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158230301
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158304468
+      }
+    ],
+    "7.1 Run the verification gates": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157376099
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158398395
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158464772
+      }
+    ],
+    "7.2 Run the manual checklist (user-run)": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157376343
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791159200800
+      }
+    ],
+    "8.1 Update `docs/ARCHITECTURE.md`": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157376559
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158310507
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158390852
+      }
+    ],
+    "8.2 Update `docs/BACKLOG.md`": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157376728
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158311829
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158392105
+      }
+    ],
+    "8.3 Update `.kiro/steering/project.md`": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157376919
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158312506
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158392939
+      }
+    ],
+    "9. Final checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157377154
+      }
+    ],
+    "1. Set up the test tooling": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157619193
+      }
+    ],
+    "2.2 Write property test for ISO round trip": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157766806
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157787365
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157839064
+      }
+    ],
+    "2.3 Write property test for time-zone independence": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157767650
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157957558
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158061507
+      }
+    ],
+    "2.6 Write property test for month grid completeness": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157768948
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158069554
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158138614
+      }
+    ],
+    "2.7 Write property test for month navigation": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157769826
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158145847
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158226019
+      }
+    ],
+    "2.8 Write property test for day navigation": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157770618
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158231306
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158305279
+      }
+    ],
+    "2.9 Write property test for year options": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157771898
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158309378
+      },
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158390073
+      }
+    ],
+    "2. Implement `lib/dates.ts`": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791157945855
+      }
+    ],
+    "4. Build `components/tracker/CalendarPopup.tsx`": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158137807
+      }
+    ],
+    "5. Build `components/tracker/DateField.tsx`": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158225688
+      }
+    ],
+    "6. Integrate into `ApplicationForm`": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158304564
+      }
+    ],
+    "8. Update the documentation": [
+      {
+        "executionId": "9177038a-a614-44c9-b7b5-9c0a0e519dca",
+        "chatSessionId": "sess_fff0dcab-bbd6-4b66-a23c-7856e992e3f8",
+        "timestamp": 1791158393298
+      }
+    ]
+  }
+}

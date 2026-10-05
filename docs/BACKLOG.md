@@ -29,6 +29,8 @@ Items come from a code review in October 2026 and are ordered by priority. Each 
 - [x] **`?error=auth` is never displayed.** `/login` now shows an "expired or already used" banner for `?error=link` or `?error=auth`.
 - [x] **The proxy deleted the PKCE code-verifier cookie** for every logged-out visitor, because `AuthSessionMissingError` is a 400. Now fixed in `lib/supabase/middleware.ts`.
 - [x] **Lint error in `Nav.tsx`** (`setState` inside an effect). The menu now closes on route change by adjusting state during render.
+- [ ] **Tracker dates can show the previous day.** `formatDate()` and `formatShortDate()` in `data/tracker.ts` call `new Date("YYYY-MM-DD")`, which parses as UTC midnight, then format with local-time `toLocaleDateString`. In negative-offset zones (for example the Americas) a stored `2025-09-02` displays as "1 Sep 2025". This affects the applications table (`ApplicationsTable`, date applied and deadline) and the opportunity cards' "Closes …" label (`OpportunityCard`).
+  - Fix: reuse `parseIso()` and `formatDisplay()` from `lib/dates.ts`, which work on plain `{y, m, d}` values and are time-zone-safe. `formatShortDate()` needs a short day-month variant built on the same helpers.
 - [ ] **The seed file isn't idempotent.** In `supabase/seed.sql`, the opportunities insert uses `on conflict do nothing`, but the table has no unique constraint, so re-running the seed duplicates rows.
 - [ ] **The prospectus mailto subject isn't encoded.** `app/sponsors/page.tsx` builds the subject by hand. Use `mailto()` or `encodeURIComponent`.
 
@@ -42,6 +44,7 @@ Items come from a code review in October 2026 and are ordered by priority. Each 
 - [ ] **Table rows aren't keyboard-accessible.** `ApplicationsTable` rows are clickable `div`s. Make them buttons or links, or add `tabIndex`, `role` and Enter/Space handling.
 - [ ] **The delete button is hard to reach.** The ✕ is `opacity-0` until hover, so keyboard and touch users can't see it. Make it visible on `focus-visible` and on touch screens.
 - [ ] **The `ApplicationForm` modal needs dialog behaviour.** It has no focus trap, doesn't close on Escape, has no `aria-labelledby` and doesn't return focus to the trigger on close. The native `<dialog>` element handles most of this.
+  - Note: the date picker's `CalendarPopup` already calls `stopPropagation` in its Escape handler, so pressing Escape in an open popup closes only the popup, not the modal. The popup root also stops click propagation itself, so it doesn't depend on the panel wrapper's `stopPropagation`, which this refactor may remove.
 - [ ] **Committee photos will have empty alt text.** `PhotoPlaceholder` defaults `alt` to `""`, so once photos are added, pass the member's name as `alt`.
 
 ## P2 — Cleanup

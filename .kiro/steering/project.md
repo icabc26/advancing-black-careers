@@ -33,4 +33,4 @@ Full reference: `docs/ARCHITECTURE.md`. Known issues and the planned fix list: `
 - Use the `ButtonLink` named export from `components/Button.tsx` for CTA links, and `mailto()` from `data/site.ts` for email links.
 - Validate any user-supplied redirect target with `safeRedirect()` from `lib/urls.ts`. It must be a same-origin path.
 - Never expose `SUPABASE_SERVICE_ROLE_KEY` to the client, and never read or echo values from `.env.local`.
-- There's no test suite yet. Verify changes with `npm run lint` and `npm run build`.
+- Verify changes with `npm test`, `npm run lint` and `npm run build`. Tests use Vitest + fast-check and live next to the code (e.g. `lib/dates.test.ts`).
